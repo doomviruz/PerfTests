@@ -11,11 +11,11 @@ fun lowerGenerator(i: Int) = IntArray(varCount) { if (i % 2 > 0) 0 else magic / 
 
 fun upperGenerator(i: Int) = IntArray(varCount) { if (i % 2 > 0) magic else magic / 2 }
 
-fun FillPopulation() = Array(50) { Individual(lowerGenerator(it), upperGenerator(it)) }
+fun fillPopulation() = Array(50) { Individual(lowerGenerator(it), upperGenerator(it)) }
 
-fun FillSignals() = Array(100000) { Signal(IntArray(varCount, { j -> j + it }), if (it % 2 > 0) -1 else 1) }
+fun fillSignals() = Array(100000) { Signal(IntArray(varCount, { j -> j + it }), if (it % 2 > 0) -1 else 1) }
 
-fun CalculateFF(signals: Array<Signal>, population: Array<Individual>, valueFactor: Int): Int {
+fun calculateFF(signals: Array<Signal>, population: Array<Individual>, valueFactor: Int): Int {
     var result = 0
     for ((lower, upper) in population) for ((variables, value1) in signals) {
         var passed = true
@@ -39,10 +39,10 @@ fun CalculateFF(signals: Array<Signal>, population: Array<Individual>, valueFact
 }
 
 fun main(args: Array<String>) {
-    val trades = FillSignals()
-    val population = FillPopulation()
+    val trades = fillSignals()
+    val population = fillPopulation()
     val start = LocalDateTime.now()
-    val total = (0..999).sumBy { CalculateFF(trades, population, it % 2) }
+    val total = (0..999).sumBy { calculateFF(trades, population, it % 2) }
 
     val time = Duration.between(start, LocalDateTime.now())
     System.out.println("$total ${time.seconds}")
