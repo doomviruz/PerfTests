@@ -1,19 +1,19 @@
 import java.time.*
 
-data class Signal(val variables : Array<Int>, val value : Int)
+data class Signal(val variables : IntArray, val value : Int)
 
-data class Individual(val lowerGenes : Array<Int>, val upperGenes : Array<Int>)
+data class Individual(val lowerGenes : IntArray, val upperGenes : IntArray)
 
 class Test{
     val magic = 100031
     val varCount = 32
 
-    fun lowerGenerator(i : Int) : Array<Int> {
-        return Array(varCount, {v -> if (i % 2 > 0) 0 else magic / 2})
+    fun lowerGenerator(i : Int) : IntArray {
+        return IntArray(varCount, {v -> if (i % 2 > 0) 0 else magic / 2})
     }
 
-    fun upperGenerator(i : Int) : Array<Int> {
-        return Array(varCount, {v -> if (i % 2 > 0) magic else magic / 2})
+    fun upperGenerator(i : Int) : IntArray {
+        return IntArray(varCount, {v -> if (i % 2 > 0) magic else magic / 2})
     }
 
     fun FillPopulation(): Array<Individual> {
@@ -21,7 +21,7 @@ class Test{
     }
 
     fun FillSignals(): Array<Signal> {
-        return Array(100000, { i -> Signal(Array(varCount, {j -> j + i}) , if(i % 2 > 0) -1 else 1) })
+        return Array(100000, { i -> Signal(IntArray(varCount, {j -> j + i}) , if(i % 2 > 0) -1 else 1) })
     }
 
     fun CalculateFF(signals: Array<Signal>, population: Array<Individual>, valueFactor: Int): Int {
