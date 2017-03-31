@@ -56,8 +56,8 @@ func CalculateFF(signals []Signal, population []Individual, valueFactor int) int
 		var upper = individuum.upperGenes
 		for j := 0; j < 100000; j++{
 			var passed bool = true
-			var signal = signals[j]
-			var variables = signal.variables
+			var signal = &signals[j]
+			var variables = &signal.variables
 			for t := 0; t < varCount; t++{
 				var val = variables[t]
 				if val <= lower[t] {
