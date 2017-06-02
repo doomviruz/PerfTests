@@ -22,12 +22,15 @@ class Test {
 
   def CalculateFF(signals: Array[Signal], population: Array[Individual], valueFactor: Int): Int = {
     var result = 0
-    for(i <- population.indices) {
+    val individualsCount = population.length;
+    var i = 0;
+    while(i < individualsCount){
       val individual = population(i)
       val lower = individual.lowerGenes
       val upper = individual.upperGenes
-
-      for (j <- signals.indices) {
+      val signalCount = signals.length;
+      var j = 0;
+      while(j < signalCount) {
         var passed = true
         var t = 0
         val signal = signals(j)
@@ -45,7 +48,11 @@ class Test {
 
         if(passed && valueFactor == 1)
           result += signal.value
+
+        j += 1;
       }
+
+      i += 1;
     }
     result
   }
@@ -55,8 +62,11 @@ class Test {
     val population = FillPopulation
     var total = 0
     val start = LocalDateTime.now()
-    for (generation <- 0 to 999)
+    var generation = 0;
+    while(generation < 1000) {
       total += CalculateFF(signals, population, generation % 2)
+      generation += 1;
+    }
 
     val time = Duration.between(start, LocalDateTime.now())
     System.out.println(s"$total ${time.getSeconds}")
